@@ -1,6 +1,9 @@
-const express = require('express');
-morgan = require('morgan');
+const express = require('express'),
+  morgan = require('morgan');
+
 const app = express();
+
+app.use(morgan('common'));
 
 let topMovies = [
   {
@@ -57,8 +60,6 @@ app.get('/movies', (req, res) => {
 });
 
 app.use(express.static('public'));
-
-app.use(morgan('common'));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
