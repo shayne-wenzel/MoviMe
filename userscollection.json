@@ -1,0 +1,5 @@
+{"_id":{"$oid":"627f8ed57725e3af8b8987a5"},"Username":"Margo","Password":"Animacity","Email":"maraleg@mail.com","Birthday":{"$date":"1985-02-19T00:00:00Z"},"FavouriteMovies":[{}]}
+{"_id":{"$oid":"627f8edd7725e3af8b8987a6"},"Username":"Misty","Password":"warmhearts","Email":"thebestg@mail.com","Birthday":{"$date":"1985-02-19T00:00:00Z"},"FavouriteMovies":[{}]}
+{"_id":{"$oid":"627f8eea7725e3af8b8987a7"},"Username":"Chase","Password":"IGBBB","Email":"onthecase@mail.com","Birthday":{"$date":"1985-02-19T00:00:00Z"},"FavouriteMovies":[{}]}
+{"_id":{"$oid":"627f8ef87725e3af8b8987a8"},"Username":"Billy","Password":"pawsome","Email":"notmylover@mail.com","Birthday":{"$date":"1985-02-19T00:00:00Z"},"FavouriteMovies":[{}]}
+{"_id":{"$oid":"627fc0cf54525391facfd937"},"Username":"newUser","Password":"im12yrsold","Email":"newbie@gmail.com","Birthday":{"$date":"2022-05-13T00:00:00Z"},"FavouriteMovies":[],"__v":0}
