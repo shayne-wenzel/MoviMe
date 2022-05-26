@@ -26,10 +26,10 @@ const cors = require('cors');
 
 let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://movime-api.herokuapp.com'];
 
-let xhr = new XMLHttpRequest();
-xhr.open('GET', 'http://localhost:8080', 'http://localhost:1234', 'https://movime-api.herokuapp.com', true);
-xhr.withCredentials = true;
-xhr.send(null);
+// let xhr = new XMLHttpRequest();
+// xhr.open('GET', 'http://localhost:8080', 'http://localhost:1234', 'https://movime-api.herokuapp.com', true);
+// xhr.withCredentials = true;
+// xhr.send(null);
 
 app.use(cors({
   credentials: true,
