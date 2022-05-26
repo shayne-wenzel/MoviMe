@@ -26,7 +26,13 @@ const cors = require('cors');
 
 let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://movime-api.herokuapp.com'];
 
+let xhr = new XMLHttpRequest();
+xhr.open('GET', 'http://localhost:8080', 'http://localhost:1234', 'https://movime-api.herokuapp.com', true);
+xhr.withCredentials = true;
+xhr.send(null);
+
 app.use(cors({
+  credentials: true,
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
