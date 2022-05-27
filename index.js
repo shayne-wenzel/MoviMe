@@ -13,7 +13,7 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-const request = require('request');
+// const request = require('request');
 
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -24,14 +24,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 let auth = require('./auth')(app);
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
-// const cors = require('cors');
-// app.use(cors());
+const cors = require('cors');
+app.use(cors());
 
 // const cors = require('cors');
 
