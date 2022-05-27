@@ -31,6 +31,11 @@ let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https:/
 // xhr.withCredentials = true;
 // xhr.send(null);
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 app.use(cors({
   credentials: true,
   origin: (origin, callback) => {
