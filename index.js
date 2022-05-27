@@ -24,20 +24,9 @@ let auth = require('./auth')(app);
 
 const cors = require('cors');
 
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://movime-api.herokuapp.com'];
-
-// let xhr = new XMLHttpRequest();
-// xhr.open('GET', 'http://localhost:8080', 'http://localhost:1234', 'https://movime-api.herokuapp.com', true);
-// xhr.withCredentials = true;
-// xhr.send(null);
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'http://testsite.com'];
 
 app.use(cors({
-  credentials: true,
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
@@ -47,6 +36,11 @@ app.use(cors({
     return callback(null, true);
   }
 }));
+
+// let xhr = new XMLHttpRequest();
+// xhr.open('GET', 'http://localhost:8080', 'http://localhost:1234', 'https://movime-api.herokuapp.com', true);
+// xhr.withCredentials = true;
+// xhr.send(null);
 
 const passport = require('passport');
 require('./passport');
