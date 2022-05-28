@@ -1,62 +1,57 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-uuid = require('uuid');
-
-const morgan = require('morgan');
+const express = require('express'),
+  bodyParser = require('body-parser'),
+  morgan = require('morgan'),
+  fs = require('fs'),
+  path = require('path'),
+  mongoose = require('mongoose'),
+  Models = require('./models.js'),
+  uuid = require('uuid');
+const passport = require('passport');
+require('./passport');
 const app = express();
+app.use(passport.initialize());
 const { check, validationResult } = require('express-validator');
 
-
-const mongoose = require('mongoose');
-const Models = require('./models.js');
-
-const Movies = Models.Movie;
-const Users = Models.User;
-
-// const request = require('request');
-
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-
-// mongoose.connect('mongodb://localhost:27017/MoviMe', { useNewUrlParser: true, useUnifiedTopology: true });
+//Middleware
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const cors = require('cors');
+let allowedOrigins = [
+  'http://localhost:8080',
+  'https://movime-api.herokuapp.com',
+  'http://localhost:1234',
+  'Access-Control-Allow-Origin'
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        // If a specific origin isn’t found on the list of allowed origins
+        let message =
+          'The CORS policy for this application doesn’t allow access from origin ' +
+          origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    }
+  })
+);
 let auth = require('./auth')(app);
 
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
-
-const cors = require('cors');
-app.use(cors());
-
-// const cors = require('cors');
-
-// let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080', 'http://testsite.com'];
-
-// app.use(cors({
-//   origin: (origin, callback) => {
-//     if(!origin) return callback(null, true);
-//     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-//       let message = 'The CORS policy for this application doesnt allow access from origin ' + origin;
-//       return callback(new Error(message ), false);
-//     }
-//     return callback(null, true);
-//   }
-// }));
-
-// let xhr = new XMLHttpRequest();
-// xhr.open('GET', 'http://localhost:8080', 'http://localhost:1234', 'https://movime-api.herokuapp.com', true);
-// xhr.withCredentials = true;
-// xhr.send(null);
-
-const passport = require('passport');
-require('./passport');
-
 app.use(morgan('common'));
+
+app.use(express.static('public'));
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// mongoose.connect('mongodb://localhost:27017/MoviMe', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Get
 
@@ -146,7 +141,7 @@ app.post('/users',
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Email does not appear to be valid').isEmail()
-    ], (req, res) =>
+    ], passport.authenticate('jwt', { session: false }), (req, res) =>
     {
     let errors = validationResult(req);
 
@@ -182,8 +177,20 @@ app.post('/users',
  });
 
 // Update
-app.put ('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) =>{
-  Users.findOneAndUpdate({ User: req.params.Username }, {
+app.put ('/users/:Username',
+[
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+  ], passport.authenticate('jwt', { session: false }), (req, res) =>{
+  
+  let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+  Users.findOneAndUpdate({ Username: req.params.Username }, {
     $set:
       {
         Username: req.body.Username,
@@ -251,7 +258,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
     });
 });
 
-app.use(express.static('public'));
+
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
