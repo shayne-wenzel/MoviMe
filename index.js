@@ -22,6 +22,7 @@ let allowedOrigins = [
   'http://localhost:8080',
   'https://movime-api.herokuapp.com',
   'http://localhost:1234',
+  'https://movime.netlify.app',
   'Access-Control-Allow-Origin'
 ];
 
