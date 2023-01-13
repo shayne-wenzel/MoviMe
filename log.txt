@@ -1,0 +1,24 @@
+URL: /
+Timestamp: Sun Oct 02 2022 18:59:04 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun Oct 02 2022 18:59:04 GMT+0200 (Central European Summer Time)
+
+URL: /documentation
+Timestamp: Sun Oct 02 2022 18:59:26 GMT+0200 (Central European Summer Time)
+
+URL: /style.css
+Timestamp: Sun Oct 02 2022 18:59:27 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun Oct 02 2022 18:59:27 GMT+0200 (Central European Summer Time)
+
+::ffff:127.0.0.1 - - [10/Oct/2022:16:52:01 +0000] "GET / HTTP/1.1" 200 28
+::ffff:127.0.0.1 - - [10/Oct/2022:16:52:01 +0000] "GET /favicon.ico HTTP/1.1" 404 150
+::ffff:127.0.0.1 - - [10/Oct/2022:21:19:20 +0000] "GET / HTTP/1.1" 304 -
+::ffff:127.0.0.1 - - [10/Oct/2022:21:19:20 +0000] "GET /favicon.ico HTTP/1.1" 404 150
+::ffff:127.0.0.1 - - [10/Oct/2022:21:20:29 +0000] "GET / HTTP/1.1" 304 -
+::1 - - [10/Oct/2022:21:23:54 +0000] "GET / HTTP/1.1" 200 28
+::1 - - [10/Oct/2022:21:23:54 +0000] "GET /favicon.ico HTTP/1.1" 404 150
+::1 - - [10/Oct/2022:21:27:48 +0000] "GET /documentation HTTP/1.1" 404 152
+::1 - - [10/Oct/2022:21:27:57 +0000] "GET /movies HTTP/1.1" 200 558
